@@ -13,7 +13,7 @@ android {
 
         sourceSets.main {
             jniLibs.srcDir 'src/main/libs'
-            //jni.srcDirs = []
+            jni.srcDirs = []
         }
     }
     buildTypes {
@@ -24,7 +24,7 @@ android {
     }
 
     task ndkBuild(type: Exec) {
-        commandLine 'C:/Users/Phil/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phil\\Documents\\GitHub\\SpotifyEQ\\app\\src\\main'
+        commandLine 'C:/Users/Phillip/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phillip\\Documents\\GitHub\\SpotifyEQ\\app\\src\\main'
 
     }
 
