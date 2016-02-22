@@ -1,0 +1,1 @@
+This project contains code from project Facebook SDK for Android v3.23.0, copyright Facebook licensed under the Apache License, Version 2.0
