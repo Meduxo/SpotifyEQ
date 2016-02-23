@@ -3,4 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="PlayButton">PlayButton</string>
     <string name="MenuButton">MenuButton</string>
+    <string name="PlaylistButton">Playlists</string>
+    <string name="LibraryButton">Library</string>
+    <string name="SearchButton">Search</string>
+
 </resources>

@@ -3,7 +3,17 @@ package peastonandroid.spotifyeq;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -21,7 +31,11 @@ import kaaes.spotify.webapi.android.SpotifyApi;
 public class MainActivity extends Activity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
+    private ImageButton menuButton;
+    private PopupWindow popupWindow;
 
+    private LayoutInflater layoutInflater;
+    private RelativeLayout relativeLayout;
     private static final String CLIENT_ID = "ea3479e0f2464105bdc683bcdd872af2";
     private static final String REDIRECT_URI = "my-first-android-eq://callback";
     SpotifyApi api = new SpotifyApi();
@@ -34,7 +48,26 @@ public class MainActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        menuButton = (ImageButton) findViewById(R.id.MenuButton);
+        relativeLayout = (RelativeLayout) findViewById(R.id.relative);
 
+        menuButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                  ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.menu_main, null);
+                  popupWindow = new PopupWindow(container, 250, 1280, true);
+                  popupWindow.showAtLocation(relativeLayout, Gravity.NO_GRAVITY, 0, 40);
+
+                  container.setOnTouchListener(new View.OnTouchListener() {
+                      @Override
+                      public boolean onTouch(View view, MotionEvent motionEvent) {
+                          popupWindow.dismiss();
+                          return true;
+                      }
+                  });
+              }
+          });
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
