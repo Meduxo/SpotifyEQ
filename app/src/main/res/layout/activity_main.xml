@@ -52,22 +52,43 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentBottom="true">
 
-        <MediaController
+        <ImageButton
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:id="@+id/mediaController"
+            android:id="@+id/Play"
+            android:visibility="visible"
             style="@android:style/MediaButton.Play"
-            android:background="@android:drawable/ic_media_play" />
+            android:background="@android:drawable/ic_media_play"
+            android:contentDescription="Play Button"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/Next"/>
 
-        <MediaController
+        <ImageButton
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:id="@+id/Pause"
+            android:visibility="invisible"
+            style="@android:style/MediaButton.Pause"
+            android:background="@android:drawable/ic_media_pause"
+            android:contentDescription="Play Button"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/Next"/>
+
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mediaController3" />
+            android:id="@+id/Next"
+            style="@android:style/MediaButton.Next"
+            android:layout_below="@+id/Play"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="47dp"/>
 
-        <MediaController
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mediaController2" />
+            android:id="@+id/Previous"
+            style="@android:style/MediaButton.Previous"
+            android:contentDescription="Previous Button"/>
 
         <SeekBar
             android:layout_width="wrap_content"

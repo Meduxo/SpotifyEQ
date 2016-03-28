@@ -24,7 +24,7 @@ android {
     }
 
     task ndkBuild(type: Exec) {
-        commandLine 'C:/Users/Phil/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phil\\Documents\\GitHub\\SpotifyEQ\\app\\src\\main'
+        commandLine 'C:/Users/Phillip/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phillip\\Documents\\GitHub\\SpotifyEQ\\SpotifyEQ\\app\\src\\main'
 
     }
 
@@ -53,4 +53,5 @@ dependencies {
     compile 'com.spotify.sdk:spotify-player:1.0.0-beta11@aar'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
