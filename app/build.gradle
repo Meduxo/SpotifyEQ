@@ -24,7 +24,7 @@ android {
     }
 
     task ndkBuild(type: Exec) {
-        commandLine 'C:/Users/Phillip/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phillip\\Documents\\GitHub\\SpotifyEQ\\app\\src\\main'
+        commandLine 'C:/Users/Phillip/AppData/Local/android/ndk/ndk-build.cmd', '-C', 'C:/Users\\Phillip\\Documents\\GitHub\\SpotifyEQ\\SpotifyEQ\\app\\src\\main'
 
     }
 
@@ -36,6 +36,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven {url "https://jitpack.io"}
     flatDir {
         dirs 'libs'
     }
@@ -44,6 +45,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.github.kaaes:spotify-web-api-android:0.2.0'
     // This library handles authentication and authorization
     compile 'com.spotify.sdk:spotify-auth:1.0.0-beta11@aar'
 
@@ -51,4 +53,5 @@ dependencies {
     compile 'com.spotify.sdk:spotify-player:1.0.0-beta11@aar'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              >
+
+
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="fill_horizontal"
+    >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+          <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_1"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f1"
+                       android:layout_below="@id/seekbar_1"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f1"/>
+            <TextView  android:id="@+id/g1"
+                       android:layout_below="@id/f1"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g1"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_2"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f2"
+                       android:layout_below="@id/seekbar_2"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f2"/>
+            <TextView  android:id="@+id/g2"
+                       android:layout_below="@id/f2"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_3"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f3"
+                       android:layout_below="@id/seekbar_3"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f3"/>
+            <TextView  android:id="@+id/g3"
+                       android:layout_below="@id/f3"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_4"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f4"
+                       android:layout_below="@id/seekbar_4"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f4"/>
+            <TextView  android:id="@+id/g4"
+                       android:layout_below="@id/f4"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g4"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_5"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f5"
+                       android:layout_below="@id/seekbar_5"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f5"/>
+            <TextView  android:id="@+id/g5"
+                       android:layout_below="@id/f5"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g5"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_6"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f6"
+                       android:layout_below="@id/seekbar_6"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f6"/>
+            <TextView  android:id="@+id/g6"
+                       android:layout_below="@id/f6"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g6"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            >
+            <peastonandroid.spotifyeq.VerticalSeekBar
+                android:id="@+id/seekbar_7"
+                android:layout_width="30dip"
+                android:layout_height="150dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"/>
+
+            <TextView  android:id="@+id/f7"
+                       android:layout_below="@id/seekbar_7"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/f7"/>
+            <TextView  android:id="@+id/g7"
+                       android:layout_below="@id/f7"
+                       android:layout_height="30dip"
+                       android:layout_width="50dip"/>
+                       //android:text="@string/g7"/>
+        </RelativeLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
