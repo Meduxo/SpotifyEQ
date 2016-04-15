@@ -27,6 +27,8 @@ package peastonandroid.spotifyeq;
 
 final public class BiQuadraticFilter {
 
+
+
     public enum Type {
 
         BANDPASS, LOWPASS, HIGHPASS, NOTCH, PEAK, LOWSHELF, HIGHSHELF
