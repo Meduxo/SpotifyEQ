@@ -51,13 +51,14 @@ public class MainActivity extends Activity implements
     private BiQuadraticFilter mBiquad_1;
     private BiQuadraticFilter mBiquad_2;
     private BiQuadraticFilter mBiquad_3;
-    public double cFreq1, cFreq2, cFreq3, Q1, Q2, Q3, mGainDB;
+    //public double cFreq1, cFreq2, cFreq3, Q1, Q2, Q3, mGainDB;
+    private int tempChannelState;
     private int mChannels;
     private int mNumFrames;
-    private int mBufferIndex;
+    private int mBufferSize; //buffer size for ringBuffer. Determine your max with this.
     private int mBufferMax; //numFrames/mBufferIndex... this will be how many total laps the ringbuffer takes.
-    private int mBufferLapCount; //This will be the current lap number.
-    private short[] mFrames;
+    private int mBufferLapCount=0; //This will be the current lap number. use for written callback
+
 
     private LayoutInflater layoutInflater;
     private RelativeLayout relativeLayout;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity implements
     SpotifyApi api = new SpotifyApi();
     private AudioTrack mTrack;
     public Player mPlayer;
-    private AudioRingBuffer mAudioRingBuffer;
+    private AudioRingBuffer mAudioRingBufferL, mAudioRingBufferR;
 
 
 
@@ -115,14 +116,12 @@ public class MainActivity extends Activity implements
         });
 
 
-
+        //Authenitcate Application via Client ID.
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
                 REDIRECT_URI);
         builder.setScopes(new String[]{"user-read-private", "streaming"});
-
         AuthenticationRequest request = builder.build();
-
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -138,140 +137,31 @@ public class MainActivity extends Activity implements
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
+
+
+
                 final Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
                 final String PLAYER_TAG = "SpotifyPlayer";
-                Player.Builder b= new Player.Builder(playerConfig);
-
-                b.setAudioController(new AudioController() {
-                    @Override
-                    public void start() {
-                        Log.d(PLAYER_TAG, "start");
-                    }
-
-                    @Override
-                    public void stop() {
-                        Log.d(PLAYER_TAG, "stop");
-                    }
-
-                    @Override
-                    public int onAudioDataDelivered(short[] frames, int numFrames, int sampleRate, int channels) {
-                        //your job is to REPLACE mTrack with buffer management.
-                        if (mTrack == null) {
-                            mChannels = channels;
-                            mNumFrames = numFrames;
-                            mFrames = new short [numFrames];
-                            for(int ind=0; ind<numFrames; ind++)
-                                mFrames[ind] = frames[ind];
-                            mBiquad_1 = new BiQuadraticFilter(BiQuadraticFilter.Type.HIGHPASS, cFreq1, sampleRate, Q1);
-                            mBiquad_2 = new BiQuadraticFilter(BiQuadraticFilter.Type.PEAK, cFreq2, sampleRate, Q2, mGainDB);
-                            mBiquad_3 = new BiQuadraticFilter(BiQuadraticFilter.Type.LOWPASS, cFreq3, sampleRate, Q3);
-                            mAudioRingBuffer = new AudioRingBuffer(mBufferIndex);
-
-
-                            int tempChannelState = 0;
-                            if (mChannels == 1) {
-                                tempChannelState = AudioFormat.CHANNEL_OUT_MONO;
-                            }
-                            else if (mChannels == 2) {
-
-                                tempChannelState = AudioFormat.CHANNEL_OUT_STEREO;
-                            }
-                            int intSize = android.media.AudioTrack.getMinBufferSize(
-                                    sampleRate,
-                                    tempChannelState,
-                                    AudioFormat.ENCODING_PCM_16BIT);
-                            Log.d(PLAYER_TAG, "Download Stream Successful, mFloat available" + intSize);
-                            //FILTER HERE
-
-
-                            mTrack = new AudioTrack(
-                                    AudioManager.STREAM_MUSIC,
-                                    sampleRate,
-                                    tempChannelState,
-                                    AudioFormat.ENCODING_PCM_16BIT,
-                                    intSize,
-                                    AudioTrack.MODE_STREAM);
-
-                            //mTrack.play();//i don't know if you have to play in here =(
-                        }
-
-                        //this is your float data, sending return, Roger.
-                        int written = mTrack.write(frames, 0, numFrames) / channels;
-                        Log.d(PLAYER_TAG, "numFrames " + numFrames + " frames length " + numFrames + " written " + written + " sampleRate " + sampleRate + " channels " + channels);
-                        return written;
-                    }
-///////////////////////////THIS IS TEMPORARY PLACEMENT.
-                    {
-                        mBuffer = new double[mNumFrames];
-                        for (int ind = 0; ind < mNumFrames; ind++) {
-                            //Peak is last, ends are first.
-                            mBuffer[ind] = mBiquad_3.filter(
-                                    mBiquad_2.filter(
-                                            mBiquad_1.filter((double) frames[ind]
-                                            )
-                                    )
-                            );
-                            tempBuffer[ind] = (short) mBuffer[ind];
-
-
-                        }
-
-                        mBufferL = new double[numFrames / 2];
-                        mBufferR = new double[numFrames / 2];
-                        for (int ind = 1; ind <= numFrames; ind += 2) {
-                            mBufferL[ind - 1] = mBiquad_3.filter(mBiquad_2.filter(mBiquad_1.filter((double) frames[ind - 1])));
-                            String Text = String.format("%.2f ", mBufferL[ind]);
-                            Log.d("Float_data", Text);
-                            mBufferR[ind] = mBiquad_3.filter(mBiquad_2.filter(mBiquad_1.filter((double) frames[ind])));
-                            tempBuffer[ind - 1] = (short) mBufferL[ind - 1];
-                            tempBuffer[ind] = (short) mBufferR[ind];
-                        }
-                    }
-
-
-
-                    @Override
-                    public void onAudioFlush() {
-                        Log.d(PLAYER_TAG, "onAudioFlush");
-                        if (mTrack != null)
-                            mTrack.flush();
-                    }
-
-                    @Override
-                    public void onAudioPaused() {
-                        Log.d(PLAYER_TAG, "onAudioPaused");
-                    }
-
-                    @Override
-                    public void onAudioResumed() {
-                        Log.d(PLAYER_TAG, "onAudioResumed");
-                    }
-                });
-
-
-
-
+                final MyAudioController mAudioController= new MyAudioController();
+                Player.Builder b= new Player.Builder(playerConfig); //Legitimize Player
+                b.setAudioController(mAudioController);
                 Spotify.getPlayer(b, this, new Player.InitializationObserver() {
-
-
-
-                //Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
+                    //Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
                     @Override
                     public void onInitialized(Player player) {
                         mPlayer = player;
-                        mTrack = null;
-                        cFreq1 = 300.0f;
-                        cFreq2 = 5000.0f;
-                        cFreq3 = 12000.0f;
-                        Q1 = Q2 = Q3 = 1.0f;
-                        mGainDB = -50.0f;
-
+                        //mTrack = new AudioTrack();
+                        mAudioController.setcFreq1(200.0f);
+                        mAudioController.setcFreq2(5000.0f);
+                        mAudioController.setcFreq3(14000.0f);
+                        mAudioController.setQ1(1.0f);
+                        mAudioController.setQ2(1.0f);
+                        mAudioController.setQ3(1.0f);
+                        mAudioController.setGainDB(-50.0f);
 
 
                         mPlayer.addConnectionStateCallback(MainActivity.this);
                         mPlayer.addPlayerNotificationCallback(MainActivity.this);
-
-
 
 
                         playButton.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +170,9 @@ public class MainActivity extends Activity implements
                                 //Need some logic for mPlayer.resume when it isn't the beginning of track.
                                 if (!isPaused) {
                                     mPlayer.play("spotify:track:6VyJOMQgXsVut0Pnjaoefm"); //eventually this will be a search
+                                    //mPlayer.play();
+
+
                                 } else {
                                     mPlayer.resume();
                                     isPaused = false;
@@ -294,19 +187,18 @@ public class MainActivity extends Activity implements
                         });
                         pauseButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v){
+                            public void onClick(View v) {
                                 mPlayer.pause();
                                 pauseButton.performHapticFeedback(1);
                                 pauseButton.setVisibility(View.INVISIBLE);
                                 pauseButton.setEnabled(false);
                                 playButton.setEnabled(true);
                                 playButton.setVisibility(View.VISIBLE);
-                                isPaused=true;
+                                isPaused = true;
                             }
                         });
                         //also need filter slider control on touch functions, may need to do a call to here in another function?
                     }
-
 
 
                     @Override
@@ -317,6 +209,7 @@ public class MainActivity extends Activity implements
             }
         }
     }
+
 
     @Override
     public void onLoggedIn() {
